@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Locked Vault</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            text-align: center;
+            margin-top: 100px;
+            background-color: #232323;
+        }
+        .container {
+            background-color: #232323;
+            border-radius: 10px;
+            padding: 50px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            width: 120%;
+            max-width: 600px;
+            margin: auto;
+            color: #57a051;
+        }
+        h1 {
+            text-decoration: underline;
+            color: #24830e;
+        }
+        input {
+            padding: 10px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 16px;
+            width: 80%;
+            margin-bottom: 10px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            background-color: #a8bea5;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #365c27;
+            color: rgb(255, 252, 240);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #6e835c;
+        }
+        .error {
+            color: red;
+            font-size: 1.4em;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>The Vault</h1>
+        <p>Enter the password to unlock the vault:</p> <br>
+        <input type="password" id="vaultCode" placeholder="p a s s w o r d"><br>
+        <button onclick="checkPassword()">Submit</button>
+        <p id="errorMessage" class="error"></p>
+    </div>
+
+    <script>
+        function checkPassword() {
+            const password = document.getElementById('vaultCode').value;
+            const errorMessage = document.getElementById('errorMessage');
+            
+            
+            if (password === "safecrack") {
+                window.location.href = "hiddencode.html"; 
+            } else {
+                errorMessage.textContent = "Incorrect password. Try again.";
+            }
+        }
+        document.getElementById("vaultCode").addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    document.querySelector("button").click();
+  }
+});
+    </script>
+
+</body>
+</html>
