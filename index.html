@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,81 +8,220 @@
     <style>
         body {
             font-family: 'Courier New', Courier, monospace;
-            text-align: center;
-            margin-top: 100px;
-            background-color: #232323;
+            background-color: #000;
+            color: #33ff33;
+            text-align: left;
+            padding: 20px;
         }
-        .container {
-            background-color: #232323;
+
+        .terminal {
+            background-color: #000;
             border-radius: 10px;
-            padding: 50px;
-            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
-            width: 120%;
-            max-width: 600px;
+            padding: 20px;
+            width: 100%;
+            max-width: 800px;
             margin: auto;
-            color: #57a051;
+            overflow: hidden;
+            height: 500px;
         }
-        h1 {
-            text-decoration: underline;
-            color: #24830e;
+
+        .console-text {
+            white-space: pre-wrap;
+            font-size: 16px;
+            line-height: 1.4;
+            height: 200px;
+            overflow-y: hidden;
         }
+
+        .input-section {
+            display: none;
+            text-align: left;
+            margin-top: 10px;
+        }
+
+        @keyframes typing {
+            from {
+                width: 0;
+            }
+
+            to {
+                width: 100%;
+            }
+        }
+
+        @keyframes blink {
+            50% {
+                border-right: 2px solid #33ff33;
+            }
+        }
+
+        .input-section {
+            display: none;
+            margin-top: 30px;
+        }
+        .input-wrapper {
+            display: inline-flex;
+            align-items: self-start;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
         input {
             padding: 10px;
             font-family: 'Courier New', Courier, monospace;
-            font-size: 16px;
-            width: 80%;
-            margin-bottom: 10px;
-            border: 1px solid #cccccc;
+            font-size: 14px;
+            width: 40% 500%;
+
             border-radius: 5px;
-            background-color: #a8bea5;
+            background-color: #333;
+
+            animation: blink 2s step-end infinite;
         }
+
         button {
             padding: 10px 20px;
             font-size: 16px;
             font-family: 'Courier New', Courier, monospace;
-            background-color: #365c27;
+            background-color: #383634;
             color: rgb(255, 252, 240);
-            border: none;
+            border: whitesmoke;
             border-radius: 5px;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
+
         button:hover {
-            background-color: #6e835c;
+            background-color: #2f332f;
+            color: whitesmoke;
         }
+
         .error {
-            color: red;
-            font-size: 1.4em;
+            color: #ff3333;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+
+        audio {
+            display: none;
+        }
+
+        .audio-container {
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .audio-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #000000;
+            color: rgb(255, 252, 240);
+            align-items: center;
+            border: whitesmoke;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .audio-button:hover {
+            background-color: #2f332f;
+            color: whitesmoke;
         }
     </style>
 </head>
-<body>
 
-    <div class="container">
-        <h1>The Vault</h1>
-        <p>Enter the password to unlock the vault:</p> <br>
-        <input type="password" id="vaultCode" placeholder="p a s s w o r d"><br>
-        <button onclick="checkPassword()">Submit</button>
-        <p id="errorMessage" class="error"></p>
+<body>
+    <br><br><br>
+
+    <div class="terminal">
+        <div id="console" class="console-text"></div>
+        <div id="inputSection" class="input-section">
+            <div class="input-wrapper">
+                <input type="password" id="vaultCode" placeholder="p a s s w o r d">
+                <button onclick="checkPassword()">Submit</button>
+            </div>
+            <p id="errorMessage" class="error"></p>
+        </div>
+    </div>
+
+    <!-- Hidden audio element for the clue -->
+    <div class="audio-container">
+        <button class="audio-button" onclick="toggleAudio()">____</button>
+        <audio id="hiddenClue">
+            <source src="morsecode.mp3" type="audio/mp3">
+            Your browser does not support the audio element.
+        </audio>
     </div>
 
     <script>
+        const consoleText = [
+            "Initializing system...\n",
+            "Loading resources...\n",
+            "Accessing secure vault...\n",
+            "----------------------------------------\n",
+            "Enter the password to continue:\n"
+        ];
+
+        let index = 0;
+        let charIndex = 0;
+        const typingSpeed = 50;
+        const consoleElement = document.getElementById('console');
+        const inputSection = document.getElementById('inputSection');
+
+        function typeText() {
+            if (index < consoleText.length) {
+                const currentLine = consoleText[index];
+                if (charIndex < currentLine.length) {
+                    consoleElement.innerHTML += currentLine.charAt(charIndex);
+                    charIndex++;
+                    setTimeout(typeText, typingSpeed);
+                } else {
+                    consoleElement.innerHTML += "<br>";
+                    charIndex = 0;
+                    index++;
+                    setTimeout(typeText, typingSpeed);
+                }
+            } else {
+                inputSection.style.display = 'block';
+            }
+        }
+
+        window.onload = function () {
+            typeText();
+        };
+
         function checkPassword() {
             const password = document.getElementById('vaultCode').value;
             const errorMessage = document.getElementById('errorMessage');
-            
-            
+
             if (password === "safecrack") {
-                window.location.href = "hiddencode.html"; 
+                window.location.href = "hiddencode.html";
             } else {
                 errorMessage.textContent = "Incorrect password. Try again.";
             }
         }
-        document.getElementById("vaultCode").addEventListener("keypress", function(event) {
-  if (event.key === "Enter") {
-    document.querySelector("button").click();
-  }
-});
+
+        document.getElementById("vaultCode").addEventListener("keypress", function (event) {
+            if (event.key === "Enter") {
+                document.querySelector("button").click();
+            }
+        });
+
+        function toggleAudio() {
+            const audioElement = document.getElementById('hiddenClue');
+            if (audioElement.style.display === 'block') {
+                audioElement.style.display = 'none';
+            } else {
+                audioElement.style.display = 'block';
+            }
+            if (audioElement.paused) {
+                audioElement.play();
+            } else {
+                audioElement.pause();
+            }
+        }
     </script>
 
 </body>
+
 </html>
