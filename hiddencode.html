@@ -99,13 +99,13 @@
             Then, keep your eyes on the hidden message.</p>
 
         <p>The last piece of the puzzle lies here somewhere...<br>Inspect properly 🔎: <br></p>
-        <p><span class="hidden-code">01101100 01101111 01100011 01101011</span></p>
+        <p><span class="hidden-code"> 01101110 01111001 01110100 01110010 01100101 </span></p>
 
-        <!-- Rearrange the binary. It spells "lock". -->
+        <!-- Rearrange the binary. It spells "entry". -->
     </div>
 
     <footer>
-        Think you’ve cracked the case? <a href="congratulations.html">Click here to finish the hunt</a>.
+        Think you’ve cracked the case? <a href="#" onclick="finishHunt()">Click here to finish the hunt</a>.
     </footer>
 
     <script>
@@ -113,6 +113,17 @@
             var clue = document.querySelector('.click-to-reveal');
             clue.classList.toggle('active');
             clue.textContent = clue.classList.contains('active') ? 'The hidden code is near...' : 'clicking here';
+        }
+
+        function finishHunt() {
+            var userAnswer = prompt("Enter the final answer to reveal the message:");
+            
+            if (userAnswer && userAnswer.toLowerCase() === 'entry') {
+                alert("You’ve solved the puzzle!! Click on ok... Surprise awaits you...");
+                window.location.href = "congratulations.html";
+            } else {
+                alert("Incorrect answer. Try again.");
+            }
         }
     </script>
 
