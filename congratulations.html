@@ -52,7 +52,7 @@
             
             
             font-family: 'Courier New', Courier, monospace;
-            background-color: #82b96c;
+            background-color: #52c640;
             color: rgb(255, 252, 240);
             border: none;
             border-radius: 5px;
@@ -71,18 +71,38 @@
             background-color: #6e835c;
             transition: 0.3s;
         }
+        .bold{
+            font-weight: bold;
+        }
+        .image-container {
+  margin-top: 20px; 
+  text-align: center; 
+}
+
+.image-container img {
+  width: 20px;
+  height: auto; 
+  border-radius: 10px; 
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2); 
+}
     </style>
 </head>
 <body>
-    <br><br><br><br>
+    <br><br><br>
     <div class="container">
         <div class="congrats-message">
-            <h1>🎉 Congratulations! 🎉</h1><br>
+            <h1> Congratulations!!!</h1><br>
             <p>You've cracked the code and revealed the secret.</p>
-            <p>The secret is you've earned a direct entry into the interview for our club without filling any forms.</p>
+            <p class="bold">The secret is you've earned a direct entry into the interview for our club without filling any forms.</p>
             <p class="imp">You're one step closer to joining us!</p>
-            <p c>First, msg this screenshot on given link then text your handles of instagram, github, linkedin</p>
+            <p c>Mention Following things:<br>
+                1.Name 2.All entered answers 3.Social media handles
+            </p>
             <a href="https://wa.me/qr/AK6WKM43IHXEN1" class="button">Claim Your Interview</a>
+            <br><p>OR SCAN THE GIVEN QR CODE</p>
+            <div class="image-container"></div>
+                <img src="qr.jpg" >
+            </div>
         </div>
     </div>
 </body>
